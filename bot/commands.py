@@ -31,17 +31,17 @@ def err(message):
 @bot.message_handler(content_types=['text'])
 def text_mes(message):
     if sl[message.chat.id][0]:
-        z = steam_pr(message.text)
-        if len(z) == 2:
-            bot.send_message(message.chat.id, f'Цена в steam без скидки: {z[0]}\n'
-                                              f'Цена в steam со скидкой: {z[1]}')
+        steam = steam_pr(message.text)
+        if len(steam) == 2:
+            bot.send_message(message.chat.id, f'Цена в steam без скидки: {steam[0]}\n'
+                                              f'Цена в steam со скидкой: {steam[1]}')
         else:
-            if z == 'Free to Play':
+            if steam == 'Free to Play':
                 bot.send_message(message.chat.id, 'В steam игра бесплатна!')
-            elif z == 'Такой игры не существует😭😭😭😭':
-                bot.send_message(message.chat.id, z)
+            elif steam == 'Такой игры не существует😭😭😭😭':
+                bot.send_message(message.chat.id, steam)
             else:
-                bot.send_message(message.chat.id, f'Цена в steam (скидки нет): {z}')
+                bot.send_message(message.chat.id, f'Цена в steam (скидки нет): {steam}')
     elif sl[message.chat.id][1]:
         send_analytic(message, 'shopgamerbot')
         bot.send_message(message.chat.id, 'Ваше сообщение доставлено.', reply_markup=key1)
