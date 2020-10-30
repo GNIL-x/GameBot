@@ -22,9 +22,19 @@ def game_mes(message):
     sl[message.chat.id] = [True, False]
 
 
+@bot.message_handler(commands=['error'])
+def err(message):
+    bot.send_message(message.chat.id, 'Опишите вашу проблему богу?')
+    sl[message.chat.id][1] = True
+
+
 @bot.message_handler(content_types=['text'])
 def text_mes(message):
     if sl[message.chat.id][0]:
         steam_pr(message.text)
-
+        sl[message.chat.id][0] = False
+    elif sl[message.chat.id][1]:
+        send_analytic(message, 'CARAMBOJAbot')
+        bot.send_message(message.chat.id, 'Ваше сообщение доставлено.', reply_markup=key1)
+        sl[message.chat.id][1] = False
 
